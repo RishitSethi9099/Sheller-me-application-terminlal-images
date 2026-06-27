@@ -24,6 +24,8 @@ verify_upstream_download() {
   local sums_url
   local sums_file
   local basename
+  local expected
+  local actual
 
   sums_url="$(dirname "$url")/SHA256SUMS"
   sums_file="$WORK_DIR/$(basename "$file").SHA256SUMS"
@@ -31,16 +33,28 @@ verify_upstream_download() {
 
   curl --fail --location --retry 5 --retry-all-errors \
     --output "$sums_file" "$sums_url"
-  grep -E "[ *]${basename}$" "$sums_file" > "$sums_file.selected"
-  if [[ ! -s "$sums_file.selected" ]]; then
+  expected=$(awk -v wanted="$basename" '
+    {
+      file=$2
+      sub(/^\*/, "", file)
+      if (file == wanted) {
+        print $1
+        exit
+      }
+    }
+  ' "$sums_file")
+  if [[ -z "$expected" ]]; then
     echo "No checksum entry found for $basename in $sums_url" >&2
     exit 1
   fi
-  (
-    cd "$(dirname "$file")"
-    sed "s#[ *]${basename}\$#  $(basename "$file")#" "$sums_file.selected" |
-      sha256sum --check -
-  )
+  actual=$(sha256sum "$file" | awk '{print $1}')
+  if [[ "$actual" != "$expected" ]]; then
+    echo "Checksum mismatch for $basename" >&2
+    echo "Expected: $expected" >&2
+    echo "Actual:   $actual" >&2
+    exit 1
+  fi
+  echo "$basename: upstream checksum verified"
 }
 
 download_verified() {

@@ -14,7 +14,7 @@ discover_kali_url() {
   local page="$WORK_DIR/get-kali.html"
   curl -fsSL --output "$page" https://www.kali.org/get-kali/
   grep -Eo \
-    'https://cdimage\.kali\.org/kali-[0-9.]+/kali-linux-[0-9.]+-qemu-amd64\.7z' \
+    'https://kali\.download/cloud-images/kali-[0-9.]+/kali-linux-[0-9.]+-cloud-genericcloud-amd64\.tar\.xz' \
     "$page" | sed -n '1p'
 }
 
@@ -90,11 +90,11 @@ qemu-img convert -p -c -O qcow2 "$WORK_DIR/ubuntu-working.qcow2" \
   "$OUTPUT_DIR/ubuntu-22.04-minimal.qcow2"
 rm -f "$WORK_DIR/ubuntu-working.qcow2"
 
-download_verified "$KALI_URL" "$WORK_DIR/kali-qemu.7z"
+download_verified "$KALI_URL" "$WORK_DIR/kali-cloud.tar.xz"
 rm -rf "$WORK_DIR/kali-extracted"
 mkdir -p "$WORK_DIR/kali-extracted"
-7z x -y "-o$WORK_DIR/kali-extracted" "$WORK_DIR/kali-qemu.7z"
-rm -f "$WORK_DIR/kali-qemu.7z"
+tar -xJf "$WORK_DIR/kali-cloud.tar.xz" -C "$WORK_DIR/kali-extracted"
+rm -f "$WORK_DIR/kali-cloud.tar.xz"
 
 KALI_SOURCE=$(find "$WORK_DIR/kali-extracted" -type f \
   \( -iname '*.qcow2' -o -iname '*.img' \) -print -quit)

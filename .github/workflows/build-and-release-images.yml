@@ -1,6 +1,13 @@
 name: Build and release Sheller VM images
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/build-and-release-images.yml
+      - assets/**
+      - scripts/**
   workflow_dispatch:
     inputs:
       release_tag:
@@ -46,18 +53,24 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             ca-certificates curl libguestfs-tools openssh-client p7zip-full \
-            qemu-system-x86 qemu-utils sshpass
+            qemu-system-x86 qemu-utils sshpass xz-utils
 
       - name: Build customized images
         run: |
           chmod +x scripts/*.sh assets/sheller-home-setup
-          scripts/build-images.sh
+          scripts/build-images.sh 2>&1 | tee build.log
 
       - name: Boot-test Ubuntu
-        run: scripts/validate-image.sh dist/ubuntu-22.04-minimal.qcow2 2222 sheller
+        run: |
+          scripts/validate-image.sh \
+            dist/ubuntu-22.04-minimal.qcow2 2222 sheller \
+            2>&1 | tee validate-ubuntu.log
 
       - name: Boot-test Kali
-        run: scripts/validate-image.sh dist/kali-minimal.qcow2 2223 sheller
+        run: |
+          scripts/validate-image.sh \
+            dist/kali-minimal.qcow2 2223 sheller \
+            2>&1 | tee validate-kali.log
 
       - name: Write release configuration
         env:
@@ -108,3 +121,39 @@ jobs:
               --title "Sheller VM images" \
               --notes-file "$RUNNER_TEMP/release-notes.md"
           fi
+
+      - name: Publish build diagnostics
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          diagnostics_dir="$RUNNER_TEMP/build-diagnostics"
+          rm -rf "$diagnostics_dir"
+          git fetch origin build-diagnostics || true
+          if git show-ref --verify --quiet refs/remotes/origin/build-diagnostics; then
+            git worktree add -B build-diagnostics \
+              "$diagnostics_dir" origin/build-diagnostics
+          else
+            git worktree add --detach "$diagnostics_dir"
+            git -C "$diagnostics_dir" checkout --orphan build-diagnostics
+            git -C "$diagnostics_dir" rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          find "$diagnostics_dir" -mindepth 1 -maxdepth 1 \
+            ! -name .git -exec rm -rf {} +
+          cp -f build.log validate-ubuntu.log validate-kali.log \
+            "$diagnostics_dir" 2>/dev/null || true
+          {
+            echo "status=$JOB_STATUS"
+            echo "run_id=$GITHUB_RUN_ID"
+            echo "commit=$GITHUB_SHA"
+            echo "updated_at=$(date --utc +%FT%TZ)"
+          } > "$diagnostics_dir/status.txt"
+
+          git -C "$diagnostics_dir" config user.name github-actions
+          git -C "$diagnostics_dir" config user.email \
+            github-actions@users.noreply.github.com
+          git -C "$diagnostics_dir" add .
+          git -C "$diagnostics_dir" commit -m \
+            "Build diagnostics for run $GITHUB_RUN_ID"
+          git -C "$diagnostics_dir" push --force origin build-diagnostics

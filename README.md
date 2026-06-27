@@ -11,7 +11,7 @@ The pipeline produces:
 - `sheller-image-urls.env`
 
 Ubuntu is based on Canonical's released Ubuntu 22.04 minimal cloud image. Kali
-is based on Kali's current official QEMU image. The build then:
+is based on Kali's current official generic cloud image. The build then:
 
 1. Creates the required `user` account with password `sheller`.
 2. Enables SSH password authentication.
@@ -32,7 +32,7 @@ is based on Kali's current official QEMU image. The build then:
 4. Click **Run workflow**.
 5. Keep the release tag as `vm-images`.
 
-The workflow can take a while because Kali's official QEMU image is large.
+The workflow can take a while because both images are customized and boot-tested.
 
 When it succeeds, open the `vm-images` release and copy the contents of
 `sheller-image-urls.env` into the desktop application's `.env` file. For this

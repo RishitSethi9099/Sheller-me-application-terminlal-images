@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 240
     env:
       OUTPUT_DIR: ${{ github.workspace }}/dist
-      WORK_DIR: ${{ runner.temp }}/sheller-images
+      WORK_DIR: ${{ github.workspace }}/.image-work
       SHELLER_VM_PASSWORD: sheller
       UBUNTU_IMAGE_URL: ${{ inputs.ubuntu_image_url }}
       KALI_IMAGE_URL: ${{ inputs.kali_image_url }}

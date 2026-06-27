@@ -1,0 +1,110 @@
+name: Build and release Sheller VM images
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Stable release tag used by the desktop application
+        required: true
+        default: vm-images
+      ubuntu_image_url:
+        description: Optional official Ubuntu base-image override
+        required: false
+      kali_image_url:
+        description: Optional official Kali QEMU archive override
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sheller-vm-images
+  cancel-in-progress: false
+
+jobs:
+  build-test-release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      OUTPUT_DIR: ${{ github.workspace }}/dist
+      WORK_DIR: ${{ runner.temp }}/sheller-images
+      SHELLER_VM_PASSWORD: sheller
+      UBUNTU_IMAGE_URL: ${{ inputs.ubuntu_image_url }}
+      KALI_IMAGE_URL: ${{ inputs.kali_image_url }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Free runner disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h /
+
+      - name: Install image tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ca-certificates curl libguestfs-tools openssh-client p7zip-full \
+            qemu-system-x86 qemu-utils sshpass
+
+      - name: Build customized images
+        run: |
+          chmod +x scripts/*.sh assets/sheller-home-setup
+          scripts/build-images.sh
+
+      - name: Boot-test Ubuntu
+        run: scripts/validate-image.sh dist/ubuntu-22.04-minimal.qcow2 2222 sheller
+
+      - name: Boot-test Kali
+        run: scripts/validate-image.sh dist/kali-minimal.qcow2 2223 sheller
+
+      - name: Write release configuration
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          {
+            echo "SHELLER_UBUNTU_IMAGE_URL=https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/ubuntu-22.04-minimal.qcow2"
+            echo "SHELLER_KALI_IMAGE_URL=https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/kali-minimal.qcow2"
+          } | tee dist/sheller-image-urls.env
+
+      - name: Inspect release files
+        run: |
+          qemu-img info dist/ubuntu-22.04-minimal.qcow2
+          qemu-img info dist/kali-minimal.qcow2
+          cat dist/SHA256SUMS
+          du -h dist/*
+          for image in dist/*.qcow2; do
+            size=$(stat --format=%s "$image")
+            if [ "$size" -ge 2147483648 ]; then
+              echo "$image exceeds GitHub's 2 GiB release-asset limit." >&2
+              exit 1
+            fi
+          done
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          cat > "$RUNNER_TEMP/release-notes.md" <<'EOF'
+          Sheller-ready local QEMU images.
+
+          Both images were boot-tested with Sheller's production settings:
+          512 MB RAM, one CPU, user/sheller SSH authentication, and a persistent
+          second disk mounted at /home/user across a reboot.
+
+          Use SHA256SUMS to verify downloaded files. Copy the two variables from
+          sheller-image-urls.env into the desktop application's .env file.
+          EOF
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/* --clobber
+            gh release edit "$RELEASE_TAG" \
+              --title "Sheller VM images" \
+              --notes-file "$RUNNER_TEMP/release-notes.md"
+          else
+            gh release create "$RELEASE_TAG" dist/* \
+              --title "Sheller VM images" \
+              --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi

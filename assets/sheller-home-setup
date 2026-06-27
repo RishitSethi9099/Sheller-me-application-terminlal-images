@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DEVICE=/dev/vdb
+MOUNT_POINT=/home/user
+STAGING=/mnt/sheller-home
+
+# The desktop always attaches its persistent home disk as the second virtio
+# drive. Keeping this service idempotent makes it safe on every boot.
+if [[ ! -b "$DEVICE" ]]; then
+  echo "[sheller-home] $DEVICE is not present; using the system-disk home."
+  exit 0
+fi
+
+if ! blkid "$DEVICE" >/dev/null 2>&1; then
+  mkfs.ext4 -F -L sheller-home "$DEVICE"
+fi
+
+mkdir -p "$STAGING" "$MOUNT_POINT"
+mountpoint -q "$STAGING" || mount "$DEVICE" "$STAGING"
+
+if [[ ! -e "$STAGING/.sheller-initialized" ]]; then
+  cp -a "$MOUNT_POINT"/. "$STAGING"/ 2>/dev/null || true
+  touch "$STAGING/.sheller-initialized"
+fi
+
+chown -R user:user "$STAGING"
+umount "$STAGING"
+
+if ! grep -qE '^[^#]*LABEL=sheller-home[[:space:]]+/home/user[[:space:]]' /etc/fstab; then
+  printf '%s\n' \
+    'LABEL=sheller-home /home/user ext4 defaults,nofail,x-systemd.device-timeout=10 0 2' \
+    >> /etc/fstab
+fi
+
+mountpoint -q "$MOUNT_POINT" || mount "$MOUNT_POINT"
+chown user:user "$MOUNT_POINT"
+
+# Host keys are intentionally removed while building so every downloaded image
+# creates a fresh identity the first time it boots.
+ssh-keygen -A

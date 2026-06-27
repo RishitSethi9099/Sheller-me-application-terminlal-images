@@ -1,0 +1,12 @@
+[Unit]
+Description=Prepare the persistent Sheller home disk
+After=local-fs.target
+Before=ssh.service sshd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/sheller-home-setup
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

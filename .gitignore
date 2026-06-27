@@ -1,0 +1,6 @@
+.image-work/
+dist/
+*.qcow2
+*.img
+*.7z
+*.tmp

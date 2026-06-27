@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+WORK_DIR=${WORK_DIR:-"$ROOT_DIR/.image-work"}
+OUTPUT_DIR=${OUTPUT_DIR:-"$ROOT_DIR/dist"}
+VM_PASSWORD=${SHELLER_VM_PASSWORD:-sheller}
+UBUNTU_URL=${UBUNTU_IMAGE_URL:-https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-22.04-minimal-cloudimg-amd64.img}
+KALI_URL=${KALI_IMAGE_URL:-}
+
+mkdir -p "$WORK_DIR" "$OUTPUT_DIR"
+
+discover_kali_url() {
+  local page="$WORK_DIR/get-kali.html"
+  curl -fsSL --output "$page" https://www.kali.org/get-kali/
+  grep -Eo \
+    'https://cdimage\.kali\.org/kali-[0-9.]+/kali-linux-[0-9.]+-qemu-amd64\.7z' \
+    "$page" | sed -n '1p'
+}
+
+verify_upstream_download() {
+  local url=$1
+  local file=$2
+  local sums_url
+  local sums_file
+  local basename
+
+  sums_url="$(dirname "$url")/SHA256SUMS"
+  sums_file="$WORK_DIR/$(basename "$file").SHA256SUMS"
+  basename=$(basename "$url")
+
+  curl --fail --location --retry 5 --retry-all-errors \
+    --output "$sums_file" "$sums_url"
+  grep -E "[ *]${basename}$" "$sums_file" > "$sums_file.selected"
+  if [[ ! -s "$sums_file.selected" ]]; then
+    echo "No checksum entry found for $basename in $sums_url" >&2
+    exit 1
+  fi
+  (
+    cd "$(dirname "$file")"
+    sed "s#[ *]${basename}\$#  $(basename "$file")#" "$sums_file.selected" |
+      sha256sum --check -
+  )
+}
+
+download_verified() {
+  local url=$1
+  local file=$2
+  curl --fail --location --retry 5 --retry-all-errors \
+    --output "$file" "$url"
+  verify_upstream_download "$url" "$file"
+}
+
+if [[ -z "$KALI_URL" ]]; then
+  KALI_URL=$(discover_kali_url)
+fi
+if [[ -z "$KALI_URL" ]]; then
+  echo "Could not discover Kali's current official QEMU image." >&2
+  exit 1
+fi
+
+echo "Ubuntu base: $UBUNTU_URL"
+echo "Kali base:   $KALI_URL"
+
+rm -f \
+  "$OUTPUT_DIR/ubuntu-22.04-minimal.qcow2" \
+  "$OUTPUT_DIR/kali-minimal.qcow2" \
+  "$OUTPUT_DIR/SHA256SUMS" \
+  "$OUTPUT_DIR/sheller-image-urls.env"
+
+download_verified "$UBUNTU_URL" "$WORK_DIR/ubuntu-base.img"
+qemu-img convert -p -O qcow2 "$WORK_DIR/ubuntu-base.img" "$WORK_DIR/ubuntu-working.qcow2"
+rm -f "$WORK_DIR/ubuntu-base.img"
+"$ROOT_DIR/scripts/configure-image.sh" ubuntu "$WORK_DIR/ubuntu-working.qcow2" "$VM_PASSWORD"
+qemu-img convert -p -c -O qcow2 "$WORK_DIR/ubuntu-working.qcow2" \
+  "$OUTPUT_DIR/ubuntu-22.04-minimal.qcow2"
+rm -f "$WORK_DIR/ubuntu-working.qcow2"
+
+download_verified "$KALI_URL" "$WORK_DIR/kali-qemu.7z"
+rm -rf "$WORK_DIR/kali-extracted"
+mkdir -p "$WORK_DIR/kali-extracted"
+7z x -y "-o$WORK_DIR/kali-extracted" "$WORK_DIR/kali-qemu.7z"
+rm -f "$WORK_DIR/kali-qemu.7z"
+
+KALI_SOURCE=$(find "$WORK_DIR/kali-extracted" -type f \
+  \( -iname '*.qcow2' -o -iname '*.img' \) -print -quit)
+if [[ -z "$KALI_SOURCE" ]]; then
+  echo "The Kali archive did not contain a QEMU disk image." >&2
+  exit 1
+fi
+
+qemu-img convert -p -O qcow2 "$KALI_SOURCE" "$WORK_DIR/kali-working.qcow2"
+rm -rf "$WORK_DIR/kali-extracted"
+"$ROOT_DIR/scripts/configure-image.sh" kali "$WORK_DIR/kali-working.qcow2" "$VM_PASSWORD"
+qemu-img convert -p -c -O qcow2 "$WORK_DIR/kali-working.qcow2" \
+  "$OUTPUT_DIR/kali-minimal.qcow2"
+rm -f "$WORK_DIR/kali-working.qcow2"
+
+qemu-img check "$OUTPUT_DIR/ubuntu-22.04-minimal.qcow2"
+qemu-img check "$OUTPUT_DIR/kali-minimal.qcow2"
+(cd "$OUTPUT_DIR" && sha256sum \
+  ubuntu-22.04-minimal.qcow2 \
+  kali-minimal.qcow2 > SHA256SUMS)

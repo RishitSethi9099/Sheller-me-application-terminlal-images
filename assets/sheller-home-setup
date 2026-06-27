@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Generate SSH host keys before persistent-home setup can fail. The published
+# image contains no host keys, so each VM creates its own identity at boot.
+ssh-keygen -A
+
 DEVICE=/dev/vdb
 MOUNT_POINT=/home/user
 STAGING=/mnt/sheller-home
@@ -35,7 +39,3 @@ fi
 
 mountpoint -q "$MOUNT_POINT" || mount "$MOUNT_POINT"
 chown user:user "$MOUNT_POINT"
-
-# Host keys are intentionally removed while building so every downloaded image
-# creates a fresh identity the first time it boots.
-ssh-keygen -A

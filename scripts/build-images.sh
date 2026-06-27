@@ -97,7 +97,7 @@ tar -xJf "$WORK_DIR/kali-cloud.tar.xz" -C "$WORK_DIR/kali-extracted"
 rm -f "$WORK_DIR/kali-cloud.tar.xz"
 
 KALI_SOURCE=$(find "$WORK_DIR/kali-extracted" -type f \
-  \( -iname '*.qcow2' -o -iname '*.img' \) -print -quit)
+  \( -iname '*.qcow2' -o -iname '*.img' -o -iname '*.raw' \) -print -quit)
 if [[ -z "$KALI_SOURCE" ]]; then
   echo "The Kali archive did not contain a QEMU disk image." >&2
   exit 1

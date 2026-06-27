@@ -12,6 +12,7 @@ VM_PASSWORD=$3
 WORK_DIR=$(mktemp -d)
 HOME_DISK="$WORK_DIR/home.qcow2"
 QEMU_LOG="$WORK_DIR/qemu.log"
+SERIAL_LOG="$WORK_DIR/serial.log"
 QEMU_PID=
 
 cleanup_vm() {
@@ -38,18 +39,23 @@ fi
 
 boot_and_run() {
   local command=$1
+  local vm_ram=512
+  if [[ "$IMAGE" == *kali* ]]; then
+    vm_ram=1024
+  fi
   : > "$QEMU_LOG"
+  : > "$SERIAL_LOG"
 
   qemu-system-x86_64 \
     -accel "$ACCEL" \
-    -m 512 \
+    -m "$vm_ram" \
     -smp 1 \
     -drive "file=$IMAGE,if=virtio,format=qcow2,readonly=on,snapshot=on" \
     -drive "file=$HOME_DISK,if=virtio,format=qcow2" \
     -netdev "user,id=net0,hostfwd=tcp:127.0.0.1:$SSH_PORT-:22" \
     -device virtio-net-pci,netdev=net0 \
     -display none \
-    -serial none \
+    -serial "file:$SERIAL_LOG" \
     -monitor none \
     -no-reboot \
     >"$QEMU_LOG" 2>&1 &
@@ -58,7 +64,10 @@ boot_and_run() {
   for attempt in $(seq 1 90); do
     if ! kill -0 "$QEMU_PID" 2>/dev/null; then
       echo "QEMU exited before SSH became ready:" >&2
+      echo "=== QEMU stdout/stderr ===" >&2
       cat "$QEMU_LOG" >&2
+      echo "=== Serial console ===" >&2
+      cat "$SERIAL_LOG" 2>/dev/null || echo "(no serial log)" >&2
       return 1
     fi
 
@@ -78,7 +87,10 @@ boot_and_run() {
   done
 
   echo "Timed out waiting for Sheller SSH:" >&2
+  echo "=== QEMU stdout/stderr ===" >&2
   cat "$QEMU_LOG" >&2
+  echo "=== Serial console ===" >&2
+  cat "$SERIAL_LOG" 2>/dev/null || echo "(no serial log)" >&2
   return 1
 }
 

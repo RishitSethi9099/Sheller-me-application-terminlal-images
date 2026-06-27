@@ -21,13 +21,14 @@ export LIBGUESTFS_BACKEND=direct
 
 args=(
   -a "$IMAGE"
-  --network
-  --install openssh-server,sudo,e2fsprogs
   --mkdir /etc/ssh/sshd_config.d
   --mkdir /usr/local/sbin
   --copy-in "$ASSET_DIR/99-sheller-sshd.conf:/etc/ssh/sshd_config.d"
   --copy-in "$ASSET_DIR/sheller-home-setup:/usr/local/sbin"
   --copy-in "$ASSET_DIR/sheller-home.service:/etc/systemd/system"
+  --run-command "command -v sshd >/dev/null"
+  --run-command "command -v sudo >/dev/null"
+  --run-command "command -v mkfs.ext4 >/dev/null"
   --run-command "id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user"
   --password "user:password:$VM_PASSWORD"
   --run-command "usermod -aG sudo user"

@@ -21,6 +21,7 @@ export LIBGUESTFS_BACKEND=direct
 
 args=(
   -a "$IMAGE"
+  --no-network
   --mkdir /etc/ssh/sshd_config.d
   --mkdir /usr/local/sbin
   --copy-in "$ASSET_DIR/99-sheller-sshd.conf:/etc/ssh/sshd_config.d"

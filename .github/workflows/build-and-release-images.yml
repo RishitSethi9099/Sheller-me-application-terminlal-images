@@ -1,13 +1,6 @@
 name: Build and release Sheller VM images
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/build-and-release-images.yml
-      - assets/**
-      - scripts/**
   workflow_dispatch:
     inputs:
       release_tag:
@@ -30,7 +23,7 @@ concurrency:
 
 jobs:
   build-test-release:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 240
     env:
       OUTPUT_DIR: ${{ github.workspace }}/dist

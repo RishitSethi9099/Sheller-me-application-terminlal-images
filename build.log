@@ -2,33 +2,35 @@ Ubuntu base: https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubun
 Kali base:   https://kali.download/cloud-images/kali-2026.1/kali-linux-2026.1-cloud-genericcloud-amd64.tar.xz
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0  294M    0 1312k    0     0  1412k      0  0:03:33 --:--:--  0:03:33 1412k 15  294M   15 44.8M    0     0  23.2M      0  0:00:12  0:00:01  0:00:11 23.2M 31  294M   31 93.3M    0     0  31.8M      0  0:00:09  0:00:02  0:00:07 31.8M 48  294M   48  141M    0     0  36.0M      0  0:00:08  0:00:03  0:00:05 36.0M 64  294M   64  190M    0     0  38.5M      0  0:00:07  0:00:04  0:00:03 38.5M 81  294M   81  238M    0     0  40.3M      0  0:00:07  0:00:05  0:00:02 47.5M 97  294M   97  287M    0     0  41.4M      0  0:00:07  0:00:06  0:00:01 48.5M100  294M  100  294M    0     0  41.6M      0  0:00:07  0:00:07 --:--:-- 48.4M
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0  294M    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  1  294M    1 5664k    0     0  3759k      0  0:01:20  0:00:01  0:01:19 3758k 13  294M   13 40.7M    0     0  16.2M      0  0:00:18  0:00:02  0:00:16 16.2M 25  294M   25 76.3M    0     0  21.7M      0  0:00:13  0:00:03  0:00:10 21.7M 37  294M   37  111M    0     0  24.8M      0  0:00:11  0:00:04  0:00:07 24.8M 50  294M   50  147M    0     0  26.7M      0  0:00:11  0:00:05  0:00:06 29.4M 62  294M   62  183M    0     0  28.1M      0  0:00:10  0:00:06  0:00:04 35.5M 74  294M   74  218M    0     0  29.1M      0  0:00:10  0:00:07  0:00:03 35.5M 86  294M   86  254M    0     0  29.8M      0  0:00:09  0:00:08  0:00:01 35.5M 98  294M   98  289M    0     0  30.4M      0  0:00:09  0:00:09 --:--:-- 35.5M100  294M  100  294M    0     0  30.5M      0  0:00:09  0:00:09 --:--:-- 35.5M
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1327  100  1327    0     0   4906      0 --:--:-- --:--:-- --:--:--  4914
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1327  100  1327    0     0   3480      0 --:--:-- --:--:-- --:--:--  3482
 ubuntu-22.04-minimal-cloudimg-amd64.img: upstream checksum verified
     (0.00/100%)    (1.00/100%)    (2.01/100%)    (3.01/100%)    (4.02/100%)    (5.02/100%)    (6.03/100%)    (7.03/100%)    (8.03/100%)    (9.04/100%)    (10.04/100%)    (11.05/100%)    (12.05/100%)    (13.06/100%)    (14.06/100%)    (15.06/100%)    (16.07/100%)    (17.07/100%)    (18.08/100%)    (19.08/100%)    (20.09/100%)    (21.09/100%)    (22.09/100%)    (23.10/100%)    (24.10/100%)    (25.11/100%)    (26.11/100%)    (27.12/100%)    (28.12/100%)    (29.12/100%)    (30.13/100%)    (31.13/100%)    (32.14/100%)    (33.14/100%)    (34.15/100%)    (35.15/100%)    (36.15/100%)    (37.16/100%)    (38.16/100%)    (39.17/100%)    (40.17/100%)    (41.18/100%)    (42.18/100%)    (43.18/100%)    (44.19/100%)    (45.19/100%)    (46.20/100%)    (47.20/100%)    (48.21/100%)    (49.21/100%)    (50.21/100%)    (51.22/100%)    (52.22/100%)    (53.23/100%)    (54.23/100%)    (55.24/100%)    (56.24/100%)    (57.24/100%)    (58.25/100%)    (59.25/100%)    (60.26/100%)    (61.26/100%)    (62.27/100%)    (63.27/100%)    (64.27/100%)    (65.28/100%)    (66.28/100%)    (67.29/100%)    (68.29/100%)    (69.29/100%)    (70.30/100%)    (71.30/100%)    (72.31/100%)    (73.31/100%)    (74.32/100%)    (75.35/100%)    (76.36/100%)    (77.41/100%)    (78.41/100%)    (79.42/100%)    (80.42/100%)    (81.43/100%)    (82.43/100%)    (83.44/100%)    (84.44/100%)    (85.52/100%)    (86.52/100%)    (87.62/100%)    (88.62/100%)    (89.62/100%)    (90.63/100%)    (91.63/100%)    (92.64/100%)    (93.64/100%)    (94.65/100%)    (95.65/100%)    (96.65/100%)    (97.66/100%)    (98.66/100%)    (99.67/100%)    (100.00/100%)    (100.00/100%)
 [   0.0] Examining the guest ...
 libguestfs: warning: current user is not a member of the KVM group (group ID 109). This user cannot access /dev/kvm, so libguestfs may run very slowly. It is recommended that you 'chmod 0666 /dev/kvm' or add the current user to the KVM group (you might need to log out and log in again).
-[  35.9] Setting a random seed
+[  33.6] Setting a random seed
 virt-customize: warning: random seed could not be set for this type of 
 guest
-[  36.1] Setting the machine ID in /etc/machine-id
-[  36.1] Making directory: /etc/ssh/sshd_config.d
-[  36.1] Making directory: /usr/local/sbin
-[  36.1] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/00-sheller-sshd.conf to /etc/ssh/sshd_config.d
-[  36.2] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home-setup to /usr/local/sbin
-[  36.3] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home.service to /etc/systemd/system
-[  36.4] Running: command -v sshd >/dev/null
-[  37.1] Running: command -v sudo >/dev/null
-[  37.7] Running: command -v mkfs.ext4 >/dev/null
-[  38.3] Running: id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user
-[  39.1] Running: usermod -aG sudo user
-[  39.9] Running: printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user
-[  40.5] Running: chmod 0440 /etc/sudoers.d/90-sheller-user
-[  41.2] Running: chmod 0755 /usr/local/sbin/sheller-home-setup
-[  41.8] Running: sshd -T | grep -qx 'passwordauthentication yes'
-sshd: no hostkeys available -- exiting.
+[  33.8] Setting the machine ID in /etc/machine-id
+[  33.8] Making directory: /etc/ssh/sshd_config.d
+[  33.8] Making directory: /usr/local/sbin
+[  33.8] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/00-sheller-sshd.conf to /etc/ssh/sshd_config.d
+[  33.9] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home-setup to /usr/local/sbin
+[  34.0] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home.service to /etc/systemd/system
+[  34.2] Running: command -v sshd >/dev/null
+[  34.8] Running: command -v sudo >/dev/null
+[  35.4] Running: command -v mkfs.ext4 >/dev/null
+[  36.0] Running: id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user
+[  36.9] Running: usermod -aG sudo user
+[  37.6] Running: printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user
+[  38.2] Running: chmod 0440 /etc/sudoers.d/90-sheller-user
+[  38.8] Running: chmod 0755 /usr/local/sbin/sheller-home-setup
+[  39.4] Running: ssh-keygen -A
+[  45.3] Running: sshd -T | grep -qx 'passwordauthentication yes'
+ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
+Missing privilege separation directory: /run/sshd
 virt-customize: error: sshd -T | grep -qx 'passwordauthentication yes': 
 command exited with an error
 

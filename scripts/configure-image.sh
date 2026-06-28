@@ -37,6 +37,7 @@ args=(
   --run-command "chmod 0440 /etc/sudoers.d/90-sheller-user"
   --run-command "chmod 0755 /usr/local/sbin/sheller-home-setup"
   --run-command "ssh-keygen -A"
+  --run-command "mkdir -p /run/sshd"
   --run-command "sshd -T | grep -qx 'passwordauthentication yes'"
   --run-command "systemctl enable ssh.service"
   --run-command "systemctl enable sheller-home.service"

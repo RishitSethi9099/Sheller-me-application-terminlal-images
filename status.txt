@@ -1,4 +1,4 @@
-status=success
-run_id=28298344420
-commit=b7aae916b5dc45a0b10788b9725b7d8d5ecdc7d9
-updated_at=2026-06-27T19:01:52Z
+status=failure
+run_id=28315743971
+commit=4a2b4bd0b928ad8f758b016f15a64e57119283f9
+updated_at=2026-06-28T07:58:40Z

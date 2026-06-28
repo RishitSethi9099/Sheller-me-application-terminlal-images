@@ -2,93 +2,37 @@ Ubuntu base: https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubun
 Kali base:   https://kali.download/cloud-images/kali-2026.1/kali-linux-2026.1-cloud-genericcloud-amd64.tar.xz
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0  294M    0 65536    0     0  99032      0  0:51:59 --:--:--  0:51:59 98996  7  294M    7 22.0M    0     0  13.2M      0  0:00:22  0:00:01  0:00:21 13.2M 21  294M   21 62.8M    0     0  23.6M      0  0:00:12  0:00:02  0:00:10 23.6M 35  294M   35  103M    0     0  28.3M      0  0:00:10  0:00:03  0:00:07 28.3M 49  294M   49  144M    0     0  31.0M      0  0:00:09  0:00:04  0:00:05 31.0M 62  294M   62  185M    0     0  32.7M      0  0:00:08  0:00:05  0:00:03 37.0M 76  294M   76  226M    0     0  33.9M      0  0:00:08  0:00:06  0:00:02 40.8M 90  294M   90  267M    0     0  34.8M      0  0:00:08  0:00:07  0:00:01 40.8M100  294M  100  294M    0     0  35.3M      0  0:00:08  0:00:08 --:--:-- 40.8M
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0  294M    0 1312k    0     0  1412k      0  0:03:33 --:--:--  0:03:33 1412k 15  294M   15 44.8M    0     0  23.2M      0  0:00:12  0:00:01  0:00:11 23.2M 31  294M   31 93.3M    0     0  31.8M      0  0:00:09  0:00:02  0:00:07 31.8M 48  294M   48  141M    0     0  36.0M      0  0:00:08  0:00:03  0:00:05 36.0M 64  294M   64  190M    0     0  38.5M      0  0:00:07  0:00:04  0:00:03 38.5M 81  294M   81  238M    0     0  40.3M      0  0:00:07  0:00:05  0:00:02 47.5M 97  294M   97  287M    0     0  41.4M      0  0:00:07  0:00:06  0:00:01 48.5M100  294M  100  294M    0     0  41.6M      0  0:00:07  0:00:07 --:--:-- 48.4M
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1327  100  1327    0     0   4092      0 --:--:-- --:--:-- --:--:--  4083
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1327  100  1327    0     0   4906      0 --:--:-- --:--:-- --:--:--  4914
 ubuntu-22.04-minimal-cloudimg-amd64.img: upstream checksum verified
     (0.00/100%)    (1.00/100%)    (2.01/100%)    (3.01/100%)    (4.02/100%)    (5.02/100%)    (6.03/100%)    (7.03/100%)    (8.03/100%)    (9.04/100%)    (10.04/100%)    (11.05/100%)    (12.05/100%)    (13.06/100%)    (14.06/100%)    (15.06/100%)    (16.07/100%)    (17.07/100%)    (18.08/100%)    (19.08/100%)    (20.09/100%)    (21.09/100%)    (22.09/100%)    (23.10/100%)    (24.10/100%)    (25.11/100%)    (26.11/100%)    (27.12/100%)    (28.12/100%)    (29.12/100%)    (30.13/100%)    (31.13/100%)    (32.14/100%)    (33.14/100%)    (34.15/100%)    (35.15/100%)    (36.15/100%)    (37.16/100%)    (38.16/100%)    (39.17/100%)    (40.17/100%)    (41.18/100%)    (42.18/100%)    (43.18/100%)    (44.19/100%)    (45.19/100%)    (46.20/100%)    (47.20/100%)    (48.21/100%)    (49.21/100%)    (50.21/100%)    (51.22/100%)    (52.22/100%)    (53.23/100%)    (54.23/100%)    (55.24/100%)    (56.24/100%)    (57.24/100%)    (58.25/100%)    (59.25/100%)    (60.26/100%)    (61.26/100%)    (62.27/100%)    (63.27/100%)    (64.27/100%)    (65.28/100%)    (66.28/100%)    (67.29/100%)    (68.29/100%)    (69.29/100%)    (70.30/100%)    (71.30/100%)    (72.31/100%)    (73.31/100%)    (74.32/100%)    (75.35/100%)    (76.36/100%)    (77.41/100%)    (78.41/100%)    (79.42/100%)    (80.42/100%)    (81.43/100%)    (82.43/100%)    (83.44/100%)    (84.44/100%)    (85.52/100%)    (86.52/100%)    (87.62/100%)    (88.62/100%)    (89.62/100%)    (90.63/100%)    (91.63/100%)    (92.64/100%)    (93.64/100%)    (94.65/100%)    (95.65/100%)    (96.65/100%)    (97.66/100%)    (98.66/100%)    (99.67/100%)    (100.00/100%)    (100.00/100%)
-[   0.1] Examining the guest ...
-libguestfs: warning: current user is not a member of the KVM group (group ID 109). This user cannot access /dev/kvm, so libguestfs may run very slowly. It is recommended that you 'chmod 0666 /dev/kvm' or add the current user to the KVM group (you might need to log out and log in again).
-[  37.0] Setting a random seed
-virt-customize: warning: random seed could not be set for this type of 
-guest
-[  37.2] Setting the machine ID in /etc/machine-id
-[  37.2] Making directory: /etc/ssh/sshd_config.d
-[  37.2] Making directory: /usr/local/sbin
-[  37.2] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/99-sheller-sshd.conf to /etc/ssh/sshd_config.d
-[  37.4] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home-setup to /usr/local/sbin
-[  37.5] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home.service to /etc/systemd/system
-[  37.6] Running: command -v sshd >/dev/null
-[  38.3] Running: command -v sudo >/dev/null
-[  39.0] Running: command -v mkfs.ext4 >/dev/null
-[  39.6] Running: id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user
-[  40.6] Running: usermod -aG sudo user
-[  41.3] Running: printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user
-[  42.0] Running: chmod 0440 /etc/sudoers.d/90-sheller-user
-[  42.7] Running: chmod 0755 /usr/local/sbin/sheller-home-setup
-[  43.3] Running: systemctl enable ssh.service
-[  44.7] Running: systemctl enable sheller-home.service
-[  45.4] Running: passwd -l root || true
-[  46.1] Running: rm -f /etc/ssh/ssh_host_*
-[  46.9] Running: truncate -s 0 /etc/machine-id || true
-[  47.6] Running: rm -rf /var/lib/cloud/instances/* /var/lib/cloud/instance 2>/dev/null || true
-[  48.3] Running: apt-get clean
-[  49.2] Running: rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-[  49.9] Making directory: /etc/netplan
-[  49.9] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/01-sheller.yaml to /etc/netplan
-[  50.0] Running: chmod 0600 /etc/netplan/01-sheller.yaml
-[  50.7] Running: touch /etc/cloud/cloud-init.disabled
-[  51.5] Setting passwords
-[  60.7] Finishing off
-No errors were found on the image.
-14740/36032 = 40.91% allocated, 0.03% fragmented, 0.00% compressed clusters
-Image end offset: 966590464
-    (0.00/100%)    (1.00/100%)    (2.01/100%)    (3.01/100%)    (4.02/100%)    (5.02/100%)    (6.02/100%)    (7.03/100%)    (8.03/100%)    (9.04/100%)    (10.04/100%)    (11.04/100%)    (12.05/100%)    (13.05/100%)    (14.06/100%)    (15.06/100%)    (16.07/100%)    (17.07/100%)    (18.07/100%)    (19.08/100%)    (20.08/100%)    (21.09/100%)    (22.09/100%)    (23.09/100%)    (24.10/100%)    (25.10/100%)    (26.11/100%)    (27.11/100%)    (28.11/100%)    (29.12/100%)    (30.12/100%)    (31.13/100%)    (32.13/100%)    (33.13/100%)    (34.14/100%)    (35.14/100%)    (36.15/100%)    (37.15/100%)    (38.15/100%)    (39.16/100%)    (40.16/100%)    (41.17/100%)    (42.17/100%)    (43.18/100%)    (44.18/100%)    (45.18/100%)    (46.19/100%)    (47.19/100%)    (48.20/100%)    (49.20/100%)    (50.20/100%)    (51.21/100%)    (52.21/100%)    (53.22/100%)    (54.22/100%)    (55.22/100%)    (56.23/100%)    (57.23/100%)    (58.24/100%)    (59.24/100%)    (60.24/100%)    (61.25/100%)    (62.25/100%)    (63.26/100%)    (64.26/100%)    (65.26/100%)    (66.27/100%)    (67.27/100%)    (68.28/100%)    (69.28/100%)    (70.28/100%)    (71.29/100%)    (72.29/100%)    (73.30/100%)    (74.30/100%)    (75.31/100%)    (76.31/100%)    (77.31/100%)    (78.32/100%)    (79.32/100%)    (80.33/100%)    (81.33/100%)    (82.33/100%)    (83.34/100%)    (84.34/100%)    (85.35/100%)    (86.35/100%)    (87.35/100%)    (88.36/100%)    (89.36/100%)    (90.37/100%)    (91.37/100%)    (92.37/100%)    (93.38/100%)    (94.38/100%)    (95.39/100%)    (96.39/100%)    (97.39/100%)    (98.40/100%)    (99.40/100%)    (100.00/100%)    (100.00/100%)
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 13  191M   13 25.9M    0     0  79.7M      0  0:00:02 --:--:--  0:00:02 79.6M100  191M  100  191M    0     0   167M      0  0:00:01  0:00:01 --:--:--  167M
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   480  100   480    0     0   7838      0 --:--:-- --:--:-- --:--:--  7868
-kali-linux-2026.1-cloud-genericcloud-amd64.tar.xz: upstream checksum verified
-    (0.00/100%)    (1.07/100%)    (2.08/100%)    (3.10/100%)    (4.12/100%)    (5.12/100%)    (6.22/100%)    (7.31/100%)    (8.49/100%)    (9.52/100%)    (10.53/100%)    (11.54/100%)    (12.56/100%)    (13.57/100%)    (14.60/100%)    (15.61/100%)    (16.78/100%)    (17.97/100%)    (19.11/100%)    (20.17/100%)    (21.18/100%)    (22.18/100%)    (23.25/100%)    (24.26/100%)    (25.28/100%)    (26.30/100%)    (27.32/100%)    (28.35/100%)    (29.40/100%)    (30.40/100%)    (31.60/100%)    (32.63/100%)    (33.65/100%)    (34.69/100%)    (35.91/100%)    (36.91/100%)    (38.14/100%)    (39.14/100%)    (40.32/100%)    (41.40/100%)    (42.45/100%)    (43.60/100%)    (44.61/100%)    (45.63/100%)    (46.67/100%)    (47.80/100%)    (48.82/100%)    (49.94/100%)    (51.06/100%)    (52.10/100%)    (53.22/100%)    (54.23/100%)    (55.31/100%)    (56.32/100%)    (57.34/100%)    (58.46/100%)    (59.47/100%)    (60.54/100%)    (61.59/100%)    (62.77/100%)    (63.96/100%)    (65.14/100%)    (66.32/100%)    (67.51/100%)    (68.69/100%)    (69.87/100%)    (71.06/100%)    (72.24/100%)    (73.43/100%)    (74.61/100%)    (75.79/100%)    (76.83/100%)    (78.06/100%)    (79.08/100%)    (80.25/100%)    (81.26/100%)    (82.33/100%)    (83.42/100%)    (84.43/100%)    (85.63/100%)    (86.73/100%)    (87.79/100%)    (88.80/100%)    (89.95/100%)    (91.11/100%)    (92.12/100%)    (93.13/100%)    (94.15/100%)    (95.16/100%)    (96.24/100%)    (97.29/100%)    (98.47/100%)    (99.53/100%)    (100.00/100%)    (100.00/100%)
 [   0.0] Examining the guest ...
 libguestfs: warning: current user is not a member of the KVM group (group ID 109). This user cannot access /dev/kvm, so libguestfs may run very slowly. It is recommended that you 'chmod 0666 /dev/kvm' or add the current user to the KVM group (you might need to log out and log in again).
-[  23.2] Setting a random seed
+[  35.9] Setting a random seed
 virt-customize: warning: random seed could not be set for this type of 
 guest
-[  23.4] Setting the machine ID in /etc/machine-id
-[  23.4] Making directory: /etc/ssh/sshd_config.d
-[  23.4] Making directory: /usr/local/sbin
-[  23.4] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/99-sheller-sshd.conf to /etc/ssh/sshd_config.d
-[  23.6] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home-setup to /usr/local/sbin
-[  23.7] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home.service to /etc/systemd/system
-[  23.8] Running: command -v sshd >/dev/null
-[  24.5] Running: command -v sudo >/dev/null
-[  25.1] Running: command -v mkfs.ext4 >/dev/null
-[  25.7] Running: id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user
-[  26.7] Running: usermod -aG sudo user
-[  27.4] Running: printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user
-[  28.0] Running: chmod 0440 /etc/sudoers.d/90-sheller-user
-[  28.7] Running: chmod 0755 /usr/local/sbin/sheller-home-setup
-[  29.3] Running: systemctl enable ssh.service
-[  31.1] Running: systemctl enable sheller-home.service
-[  31.8] Running: passwd -l root || true
-[  32.5] Running: rm -f /etc/ssh/ssh_host_*
-[  33.2] Running: truncate -s 0 /etc/machine-id || true
-[  33.9] Running: rm -rf /var/lib/cloud/instances/* /var/lib/cloud/instance 2>/dev/null || true
-[  34.5] Running: apt-get clean
-[  35.4] Running: rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-[  36.1] Setting passwords
-[  45.5] Finishing off
-No errors were found on the image.
-14353/409600 = 3.50% allocated, 0.01% fragmented, 0.00% compressed clusters
-Image end offset: 942145536
-    (0.00/100%)    (1.00/100%)    (2.01/100%)    (3.01/100%)    (4.01/100%)    (5.02/100%)    (6.02/100%)    (7.02/100%)    (8.03/100%)    (9.03/100%)    (10.03/100%)    (11.04/100%)    (12.04/100%)    (13.04/100%)    (14.05/100%)    (15.05/100%)    (16.05/100%)    (17.06/100%)    (18.06/100%)    (19.06/100%)    (20.07/100%)    (21.07/100%)    (22.07/100%)    (23.08/100%)    (24.08/100%)    (25.08/100%)    (26.09/100%)    (27.09/100%)    (28.09/100%)    (29.09/100%)    (30.10/100%)    (31.10/100%)    (32.10/100%)    (33.11/100%)    (34.11/100%)    (35.11/100%)    (36.12/100%)    (37.12/100%)    (38.12/100%)    (39.13/100%)    (40.13/100%)    (41.13/100%)    (42.14/100%)    (43.14/100%)    (44.14/100%)    (45.15/100%)    (46.15/100%)    (47.15/100%)    (48.16/100%)    (49.16/100%)    (50.16/100%)    (51.17/100%)    (52.17/100%)    (53.17/100%)    (54.18/100%)    (55.18/100%)    (56.18/100%)    (57.19/100%)    (58.19/100%)    (59.19/100%)    (60.20/100%)    (61.20/100%)    (62.20/100%)    (63.21/100%)    (64.21/100%)    (65.21/100%)    (66.22/100%)    (67.22/100%)    (68.22/100%)    (69.23/100%)    (70.23/100%)    (71.23/100%)    (72.24/100%)    (73.24/100%)    (74.24/100%)    (75.25/100%)    (76.25/100%)    (77.25/100%)    (78.26/100%)    (79.26/100%)    (80.26/100%)    (81.27/100%)    (82.27/100%)    (83.27/100%)    (84.28/100%)    (85.28/100%)    (86.28/100%)    (87.28/100%)    (88.29/100%)    (89.29/100%)    (90.29/100%)    (91.30/100%)    (92.30/100%)    (93.30/100%)    (94.31/100%)    (95.31/100%)    (96.31/100%)    (97.32/100%)    (98.32/100%)    (99.32/100%)    (100.00/100%)    (100.00/100%)
-No errors were found on the image.
-14739/36032 = 40.91% allocated, 98.26% fragmented, 98.07% compressed clusters
-Image end offset: 308936704
-No errors were found on the image.
-14353/409600 = 3.50% allocated, 96.00% fragmented, 94.89% compressed clusters
-Image end offset: 323092480
+[  36.1] Setting the machine ID in /etc/machine-id
+[  36.1] Making directory: /etc/ssh/sshd_config.d
+[  36.1] Making directory: /usr/local/sbin
+[  36.1] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/00-sheller-sshd.conf to /etc/ssh/sshd_config.d
+[  36.2] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home-setup to /usr/local/sbin
+[  36.3] Copying: /home/runner/work/Sheller-me-application-terminlal-images/Sheller-me-application-terminlal-images/assets/sheller-home.service to /etc/systemd/system
+[  36.4] Running: command -v sshd >/dev/null
+[  37.1] Running: command -v sudo >/dev/null
+[  37.7] Running: command -v mkfs.ext4 >/dev/null
+[  38.3] Running: id -u user >/dev/null 2>&1 || useradd -m -s /bin/bash user
+[  39.1] Running: usermod -aG sudo user
+[  39.9] Running: printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user
+[  40.5] Running: chmod 0440 /etc/sudoers.d/90-sheller-user
+[  41.2] Running: chmod 0755 /usr/local/sbin/sheller-home-setup
+[  41.8] Running: sshd -T | grep -qx 'passwordauthentication yes'
+sshd: no hostkeys available -- exiting.
+virt-customize: error: sshd -T | grep -qx 'passwordauthentication yes': 
+command exited with an error
+
+If reporting bugs, run virt-customize with debugging enabled and include 
+the complete output:
+
+  virt-customize -v -x [...]

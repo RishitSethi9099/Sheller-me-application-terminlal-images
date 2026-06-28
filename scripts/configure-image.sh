@@ -24,7 +24,7 @@ args=(
   --no-network
   --mkdir /etc/ssh/sshd_config.d
   --mkdir /usr/local/sbin
-  --copy-in "$ASSET_DIR/99-sheller-sshd.conf:/etc/ssh/sshd_config.d"
+  --copy-in "$ASSET_DIR/00-sheller-sshd.conf:/etc/ssh/sshd_config.d"
   --copy-in "$ASSET_DIR/sheller-home-setup:/usr/local/sbin"
   --copy-in "$ASSET_DIR/sheller-home.service:/etc/systemd/system"
   --run-command "command -v sshd >/dev/null"
@@ -36,6 +36,7 @@ args=(
   --run-command "printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user"
   --run-command "chmod 0440 /etc/sudoers.d/90-sheller-user"
   --run-command "chmod 0755 /usr/local/sbin/sheller-home-setup"
+  --run-command "sshd -T | grep -qx 'passwordauthentication yes'"
   --run-command "systemctl enable ssh.service"
   --run-command "systemctl enable sheller-home.service"
   --run-command "passwd -l root || true"

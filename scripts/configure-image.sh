@@ -36,6 +36,7 @@ args=(
   --run-command "printf '%s\n' 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-sheller-user"
   --run-command "chmod 0440 /etc/sudoers.d/90-sheller-user"
   --run-command "chmod 0755 /usr/local/sbin/sheller-home-setup"
+  --run-command "ssh-keygen -A"
   --run-command "sshd -T | grep -qx 'passwordauthentication yes'"
   --run-command "systemctl enable ssh.service"
   --run-command "systemctl enable sheller-home.service"
